@@ -1,0 +1,7 @@
+add_subdirectory(qjsonrpchttpclient)
+add_subdirectory(qjsonrpchttpserver)
+add_subdirectory(qjsonrpcmessage)
+add_subdirectory(qjsonrpcmetatype)
+add_subdirectory(qjsonrpcserver)
+add_subdirectory(qjsonrpcservice)
+add_subdirectory(qjsonrpcsocket)

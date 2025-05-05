@@ -1,0 +1,16 @@
+# QJSONRPC library cmake configuration file
+#
+# the following variables are defined:
+#   QJSONRPC_INCLUDE_DIR - location of the headers
+#   QJSONRPC_LIBRARY_DIR - location of the library
+#   QJSONRPC_LIBRARIES   - QJSONRPC library name
+
+if(${QJSONRPC_IN_BUILD_TREE})  
+  include("${CMAKE_BINARY_DIR}/QJSonRPCBuildTreeSettings.cmake")
+else()
+  set(QJSONRPC_INCLUDE_DIRS ${CMAKE_INSTALL_INCLUDEDIR})
+endif()
+
+set(QJSONRPC_LIBRARY_DIRS ${CMAKE_INSTALL_LIBDIR})
+
+set(QJSONRPC_LIBRARIES qjsonrpc)
