@@ -99,7 +99,6 @@ private:
 
     // server related
     QJsonRpcAbstractServer *server;
-    QThread serverThread;
     QScopedPointer<QJsonRpcTcpServer> tcpServer;
     QScopedPointer<QJsonRpcLocalServer> localServer;
     QScopedPointer<QJsonRpcHttpServer> httpServer;
@@ -129,13 +128,10 @@ void TestQJsonRpcServer::initTestCase_data()
 
 void TestQJsonRpcServer::initTestCase()
 {
-    serverThread.start();
 }
 
 void TestQJsonRpcServer::cleanupTestCase()
 {
-    serverThread.quit();
-    QVERIFY(serverThread.wait());
 }
 
 QJsonRpcAbstractSocket *TestQJsonRpcServer::createClient()
@@ -183,20 +179,41 @@ void TestQJsonRpcServer::init()
     QFETCH_GLOBAL(ServerType, serverType);
     if (serverType == LocalServer) {
         localServer.reset(new QJsonRpcLocalServer);
-        QVERIFY(localServer->listen("qjsonrpc-test-local-server"));
-        localServer->moveToThread(&serverThread);
+        QString socketPath("qjsonrpc-test-local-server");
+        QLocalSocket socket;
+        socket.connectToServer(socketPath);
+        if (socket.waitForConnected(100)) {
+            QFAIL("There is another instance of test running.");
+        } else {
+            switch (socket.error()) {
+            case QLocalSocket::ServerNotFoundError:
+                // Everything is good. No socket present.
+                break;
+            case QLocalSocket::ConnectionRefusedError:
+                // The socket exists, but there's no response. It probably crashed earlier.
+                QWARN("Test has not been terminated properly.");
+                QLocalServer::removeServer(socketPath);
+                break;
+            default:
+                // Any other errors should cause an exit now.
+                qWarning() << socket.error();
+                qWarning() << socket.errorString();
+
+                QFAIL("Unexpected error!");
+                break;
+            }
+        }
+        QVERIFY(localServer->listen(socketPath));
         server = localServer.data();
     } else if (serverType == TcpServer) {
         tcpServer.reset(new QJsonRpcTcpServer);
         tcpServerPort = quint16(91919 + qrand() % 1000);
         QVERIFY(tcpServer->listen(QHostAddress::LocalHost, tcpServerPort));
-        tcpServer->moveToThread(&serverThread);
         server = tcpServer.data();
     } else if (serverType == HttpServer) {
         httpServer.reset(new QJsonRpcHttpServer);
         httpServerPort = quint16(8118 + qrand() % 1000);
         QVERIFY(httpServer->listen(QHostAddress::LocalHost, httpServerPort));
-        httpServer->moveToThread(&serverThread);
         server = httpServer.data();
     }
 
