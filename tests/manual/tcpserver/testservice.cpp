@@ -24,37 +24,37 @@ TestService::TestService(QObject *parent)
 
 void TestService::testMethod()
 {
-    qDebug() << Q_FUNC_INFO << "called" << endl;
+    qDebug() << Q_FUNC_INFO << "called" << Qt::endl;
 }
 
 void TestService::testMethodWithParams(const QString &first, bool second, double third)
 {
-    qDebug() << Q_FUNC_INFO << "called with parameters: " << endl
-             << " first: " << first << endl
-             << "second: " << second << endl
-             << " third: " << third << endl;
+    qDebug() << Q_FUNC_INFO << "called with parameters: " << Qt::endl
+             << " first: " << first << Qt::endl
+             << "second: " << second << Qt::endl
+             << " third: " << third << Qt::endl;
 }
 
 void TestService::testMethodWithVariantParams(const QString &first, bool second, double third, const QVariant &fourth)
 {
-    qDebug() << Q_FUNC_INFO << "called with variant parameters: " << endl
-             << " first: " << first << endl
-             << "second: " << second << endl
-             << " third: " << third << endl
-             << "fourth: " << fourth << endl;
+    qDebug() << Q_FUNC_INFO << "called with variant parameters: " << Qt::endl
+             << " first: " << first << Qt::endl
+             << "second: " << second << Qt::endl
+             << " third: " << third << Qt::endl
+             << "fourth: " << fourth << Qt::endl;
 }
 
 QString TestService::testMethodWithParamsAndReturnValue(const QString &name)
 {
-    qDebug() << Q_FUNC_INFO << "called" << endl;
+    qDebug() << Q_FUNC_INFO << "called" << Qt::endl;
     return QString("Hello %1").arg(name);
 }
 
 void TestService::testMethodWithDefaultParameter(const QString &first, const QString &second)
 {
-    qDebug() << Q_FUNC_INFO << endl
-             << "first: " << first << endl
-             << (second.isEmpty() ? "not defined, default parameter" : second) << endl;
+    qDebug() << Q_FUNC_INFO << Qt::endl
+             << "first: " << first << Qt::endl
+             << (second.isEmpty() ? "not defined, default parameter" : second) << Qt::endl;
 }
 
 void TestService::testNotifyConnectedClients(const QString &message)
