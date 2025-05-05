@@ -17,6 +17,7 @@
 #include <QLocalSocket>
 #include <QTcpSocket>
 #include <QScopedPointer>
+#include <QRandomGenerator>
 
 #include <QtCore/QEventLoop>
 #include <QtCore/QVariant>
@@ -207,12 +208,12 @@ void TestQJsonRpcServer::init()
         server = localServer.data();
     } else if (serverType == TcpServer) {
         tcpServer.reset(new QJsonRpcTcpServer);
-        tcpServerPort = quint16(91919 + qrand() % 1000);
+        tcpServerPort = quint16(91919 + QRandomGenerator::global()->bounded(1000));
         QVERIFY(tcpServer->listen(QHostAddress::LocalHost, tcpServerPort));
         server = tcpServer.data();
     } else if (serverType == HttpServer) {
         httpServer.reset(new QJsonRpcHttpServer);
-        httpServerPort = quint16(8118 + qrand() % 1000);
+        httpServerPort = quint16(8118 + QRandomGenerator::global()->bounded(1000));
         QVERIFY(httpServer->listen(QHostAddress::LocalHost, httpServerPort));
         server = httpServer.data();
     }
