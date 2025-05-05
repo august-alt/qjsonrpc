@@ -96,7 +96,7 @@ qint64 QJsonRpcHttpServerSocket::writeData(const char *data, qint64 maxSize)
 
         if(m_requestHeaders.contains("origin")) {
           QString origin = m_requestHeaders["origin"];
-          responseHeader += "Access-Control-Allow-Origin: " + origin + "\r\n";
+          responseHeader += "Access-Control-Allow-Origin: " + origin.toLatin1() + "\r\n";
         }
 
         responseHeader += "Content-Type: application/json-rpc\r\n";
