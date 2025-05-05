@@ -55,19 +55,19 @@ void TestQJsonRpcMessage::debugStreams_data()
         "QJsonRpcMessage(type=QJsonRpcMessage::Invalid, id=0)";
     QJsonRpcMessage request = QJsonRpcMessage::createRequest("service.method");
     QTest::newRow("request-message") << request <<
-        "QJsonRpcMessage(type=QJsonRpcMessage::Request, id=1, method=\"service.method\", params=QJsonValue(undefined) )";
+        "QJsonRpcMessage(type=QJsonRpcMessage::Request, id=1, method=\"service.method\", params=QJsonValue(undefined))";
 
     QJsonRpcMessage response = request.createResponse(QLatin1String("response"));
     QTest::newRow("response-message") << response <<
-        "QJsonRpcMessage(type=QJsonRpcMessage::Response, id=1, result=QJsonValue(string, \"response\") )";
+        "QJsonRpcMessage(type=QJsonRpcMessage::Response, id=1, result=QJsonValue(string, \"response\"))";
 
     QJsonRpcMessage error = request.createErrorResponse(QJsonRpc::MethodNotFound);
     QTest::newRow("error-message") << error <<
-        "QJsonRpcMessage(type=QJsonRpcMessage::Error, id=1, code=-32601, message=\"\", data=QJsonValue(null) )";
+        "QJsonRpcMessage(type=QJsonRpcMessage::Error, id=1, code=-32601, message=\"\", data=QJsonValue(null))";
 
     QJsonRpcMessage notification = QJsonRpcMessage::createNotification("service.notification");
     QTest::newRow("notification-message") << notification <<
-        "QJsonRpcMessage(type=QJsonRpcMessage::Notification, method=\"service.notification\", params=QJsonValue(undefined) )";
+        "QJsonRpcMessage(type=QJsonRpcMessage::Notification, method=\"service.notification\", params=QJsonValue(undefined))";
 }
 
 void TestQJsonRpcMessage::debugStreams()
