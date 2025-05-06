@@ -1,0 +1,35 @@
+name: Build on Alt-Linux
+
+on:
+  workflow_call:
+    inputs:
+      os:
+        description: "OS"
+        type: string
+        required: true
+
+  workflow_dispatch:
+    inputs:
+      os:
+        description: "OS"
+        type: choice
+        options:
+          - alt:sisyphus
+          - alt:p11
+          - alt:p10
+        required: false
+        default: "alt:sisyphus"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - run: docker build . --file Dockerfile --tag build-environment --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g) --build-arg DISTR=${{ inputs.os }}
+
+      - run: docker run --privileged=true -i --log-driver=none -a stdin -a stdout -a stderr -v "$(pwd)":/app build-environment
+
