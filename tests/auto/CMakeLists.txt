@@ -1,3 +1,4 @@
+add_subdirectory(issue22)
 add_subdirectory(qjsonrpchttpclient)
 add_subdirectory(qjsonrpchttpserver)
 add_subdirectory(qjsonrpcmessage)
