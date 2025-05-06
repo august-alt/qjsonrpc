@@ -49,7 +49,6 @@ private Q_SLOTS:
     void testIssue21();
 
 private:
-    QThread serverThread;
     QScopedPointer<QJsonRpcTcpServer> tcpServer;
     quint16 tcpServerPort;
 };
@@ -61,20 +60,16 @@ TestIssue22::TestIssue22()
 
 void TestIssue22::initTestCase()
 {
-    serverThread.start();
 }
 
 void TestIssue22::cleanupTestCase()
 {
-    serverThread.quit();
-    QVERIFY(serverThread.wait());
 }
 
 void TestIssue22::init()
 {
     tcpServer.reset(new QJsonRpcTcpServer);
     QVERIFY(tcpServer->listen(QHostAddress::LocalHost, tcpServerPort));
-    tcpServer->moveToThread(&serverThread);
 }
 
 void TestIssue22::cleanup()
