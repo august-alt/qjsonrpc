@@ -1,4 +1,14 @@
-[![Build Status](https://drone.io/bitbucket.org/devonit/qjsonrpc/status.png)](https://drone.io/bitbucket.org/devonit/qjsonrpc/latest)
+Fork
+====
+
+This is a fork of the original QJsonRpc library which you can get at: 
+[qjsonrpc](https://bitbucket.org/devonit/qjsonrpc).
+
+
+- Fork introduces use of cmake build system instead of qmake. 
+- It also fixes issue with broken qjsonrpcserver auto-test when building against Qt 5.15.
+- Fork provides CI/CD via github actions.
+- Additionally ability to build RPM packages for ALT linux distribution has been implemented.
 
 Overview
 =======
@@ -18,7 +28,7 @@ Help / Questions / Suggestions
 Requirements
 ============
 
-- Qt 4.7 or greater
+- Qt 5.15 or greater
 
 Features
 ========
@@ -32,13 +42,10 @@ Building
 
     mkdir build
     cd build
-    qmake .. && make install
+    cmake .. && make install
 
-You can pass the following arguments to qmake:
+You can pass the following arguments to cmake:
 
-    PREFIX=<prefix>                 to change the install prefix
-                                    default:
-                                        unix:  /usr
-                                        other: $$[QT_INSTALL_PREFIX]
-    QJSONRPC_LIBRARY_TYPE=staticlib to build a static version of the library
-    -config private-headers         build with qt private headers (to reduce allocations)
+    -DQJSONRPC_BUILD_TESTS=BOOL:ON    to enable cmake build tests
+                                      default:
+                                          OFF
