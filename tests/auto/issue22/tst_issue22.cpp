@@ -56,7 +56,7 @@ private:
 
 TestIssue22::TestIssue22()
 {
-    tcpServerPort = quint16(8118 + qrand() % 1000);
+    tcpServerPort = quint16(8118 + QRandomGenerator::global()->bounded(1000));
 }
 
 void TestIssue22::initTestCase()
