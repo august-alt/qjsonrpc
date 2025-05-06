@@ -33,7 +33,7 @@ configure_file(
     "${CMAKE_BINARY_DIR}/QJSonRPCConfig.cmake"
     IMMEDIATE @ONLY
 )
-install(FILES ${CMAKE_BINARY_DIR}/QJSonRPCConfig.cmake DESTINATION "${CMAKE_INSTALL_LIBDIR}/QJSonRPC")
+install(FILES ${CMAKE_BINARY_DIR}/QJSonRPCConfig.cmake DESTINATION "${CMAKE_INSTALL_LIBDIR}/qjsonrpc")
 
 configure_file(
     "${CMAKE_MODULE_PATH}/QJSonRPCBuildTreeSettings.cmake.in"
